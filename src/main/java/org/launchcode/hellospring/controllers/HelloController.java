@@ -43,12 +43,25 @@ public class HelloController {
 
         String greeting = "";
 
+
         switch(hellos) {
             case "english":
                 greeting = "Hello";
+                break;
+            case "french":
+                greeting = "Bonjour";
+                break;
+            case "spanish":
+                greeting = "Hola";
+                break;
+            case "german":
+                greeting = "Guten tag";
+                break;
+            case "italian":
+                greeting = "Bonjourno";
         }
 
-        return greeting + ", this is the form response, " + name + "!";
+        return  /* "The value of hellos is " + hellos + "," +*/ greeting + ", this is the form response, " + name + "!";
 
 
     }
