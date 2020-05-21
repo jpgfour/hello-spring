@@ -25,9 +25,10 @@ public class HelloController {
     //Handles request of the form /hello?name=LaunchCode
 //    @GetMapping("hello")
 //    @PostMapping("hello")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+    //@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!";
+
+        return "Hello, " + "this is not the form response, " + name + "!";
     }
 
     //Handles requests of the form /hello/LaunchCode
@@ -35,6 +36,23 @@ public class HelloController {
     public String helloWithPathParam(@PathVariable String name){
         return "Hello, " + name + "!";
     }
+
+    //TODO Handles requests of the the form /hello?name=LaunchCode&hellos=English
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+    public static String createMessage(@RequestParam String name, @RequestParam String hellos){
+
+        String greeting = "";
+
+        switch(hellos) {
+            case "english":
+                greeting = "Hello";
+        }
+
+        return greeting + ", this is the form response, " + name + "!";
+
+
+    }
+
 
     // /hello/form
 //    @GetMapping("form")
