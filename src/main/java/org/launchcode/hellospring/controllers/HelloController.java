@@ -1,11 +1,15 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 //@ResponseBody
-@RequestMapping("hello")
+//@RequestMapping("hello") <---might need to restore to get select list working again
 public class HelloController {
 
 //    //Handles request at path /hello
@@ -33,10 +37,10 @@ public class HelloController {
     }
 
     //Handles requests of the form /hello/LaunchCode
-    @GetMapping("{name}")
-    public String helloWithPathParam(@PathVariable String name){
-        return "Hello, " + name + "!";
-    }
+//    @GetMapping("{name}")
+//    public String helloWithPathParam(@PathVariable String name){
+//        return "Hello, " + name + "!";
+//    }
 
     //TODO Handles requests of the the form /hello?name=LaunchCode&hellos=English
     @ResponseBody
@@ -75,42 +79,30 @@ public class HelloController {
         return "form";
     }
 
-    // /hello/form
-//    @GetMapping("form")
-//    public String helloAroundTheWorldForm(){
-//        return "<html" +
-//                "<body>" +
-//                "<form action='/hello' method='get'>" + //submit a request to /hello
-//                "<input type='text' name='name'>" +
-//                //implement dropdown AKA select
-//                "<select name=\"hellos\" id=\"hellos-select\">\n" +
-//                "    <option value=\"\">--Please choose an option--</option>\n" +
-//                "    <option value=\"french\">French</option>\n" +
-//                "    <option value=\"spanish\">Spanish</option>\n" +
-//                "    <option value=\"german\">German</option>\n" +
-//                "    <option value=\"italian\">Italian</option>\n" +
-//                "    <option value=\"portuguese\">Portuguese</option>\n" +
-//                "    <option value=\"hindi\">Hindi</option>\n" +
-//                "    <option value=\"persian-farsi\">Persian (Farsi)</option>\n" +
-//                "    <option value=\"russian\">Russian</option>\n" +
-//                "    <option value=\"japanese\">Japanese</option>\n" +
-//                "    <option value=\"korean\">Korean</option>\n" +
-//                "    <option value=\"turkish\">Turkish</option>\n" +
-//                "    <option value=\"mongolian\">Mongolian</option>\n" +
-//                "    <option value=\"kazakh\">Kazakh</option>\n" +
-//                "    <option value=\"hungarian\">Hungarian</option>\n" +
-//                "    <option value=\"arabic\">Arabic</option>\n" +
-//                "    <option value=\"hausa\">Hausa</option>\n" +
-//                "    <option value=\"swahili\">Swahili</option>\n" +
-//                "    <option value=\"mandarin\">Mandarin</option>\n" +
-//                "    <option value=\"cantonese\">Cantonese</option>\n" +
-//                "    <option value=\"bahasa-indonesia\">Bahasa Indonesia</option>\n" +
-//                "    <option value=\"english\">English</option>\n" +
-//                "</select>" +
-//                "<input type ='submit' value='Greet me!'>" +
-//                "</form>" +
-//                "</body>" +
-//                "</html>";
-//    }
+//below this point:  (re)creating CLEAN code and doing work for Chris' 'Thymeleaf Part 2' videos
+    //responds to /hello?name=LaunchCode
+    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
+    public String hello(@RequestParam String name, Model model) {
+        String greeting = "Hello, " + name + "!";
+        model.addAttribute("greeting",greeting);
+        return "hello";
+    }
+
+    //responds to
+    @GetMapping("{name}")
+    public String helloWithPathParam(@PathVariable String name, Model model){
+        model.addAttribute("greeting","Hello, " + name + "!");
+        return "hello";
+    }
+
+    @GetMapping("hello-names")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("LaunchCode");
+        names.add("Java");
+        names.add("JavaScript");
+        model.addAttribute("names",names);
+        return "hello-list";
+    }
 
 }
